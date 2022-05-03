@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>GAME LIBRARY</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<h3>Welcome to game library</h3>
+
+<ul th:each="game :${games}">
+  <li th:text="${game.name}"></li> <span th:text="${game.genre}"></span>
+  <a th:href="@{/delete-game(id=${game.id})}">Delete</a>
+</ul>
+
+<a th:href="@{/add}">ADD GAME</a>
+</body>
+</html>

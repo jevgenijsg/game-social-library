@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Hello</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+
+<p>ADD GAME</p>
+
+<h1>FORM</h1>
+<form action="#" th:action="@{/process-add}" th:object="${game}" method="post">
+    <p>Name: <input type="text" th:field="*{name}" /><span th:if="${#fields.hasErrors('name')}" th:class="error" th:errors="*{name}"></span></p>
+    <select th:field="*{genre}">
+        <option th:each="genre : ${genres}" th:value="${genre.value}" th:text="${genre.value}">
+        </option>
+    </select>
+
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
