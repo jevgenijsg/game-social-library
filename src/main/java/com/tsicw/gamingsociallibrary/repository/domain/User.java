@@ -19,12 +19,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "gsc_users")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -37,23 +38,24 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String username;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
-    private String email;
+/*    @Column(name = "email")
+    private String email;*/
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
 
-    public boolean isAdmin(){
-        return roles.contains(Roles.ADMIN);
-    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<GameCollection> collections;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

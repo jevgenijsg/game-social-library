@@ -17,6 +17,9 @@
     <div>
       <ul th:each="game :${games}">
         <li th:text="${game.name}"></li> <span th:text="${game.genre}"></span>
+        <div th:if="${game.filename}">
+          <img src="/img/${game.filename}">
+        </div>
         <a th:href="@{/games/delete-game/{id}(id=${game.id})}">Delete</a>
         <a th:href="@{/games/show-update-form/{id}(id=${game.id})}">Update</a>
       </ul>
