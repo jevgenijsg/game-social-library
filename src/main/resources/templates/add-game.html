@@ -10,7 +10,7 @@
 <p>ADD GAME</p>
 
 <h1>FORM</h1>
-<form action="#" th:action="@{/process-add}" th:object="${game}" method="post">
+<form action="#" th:action="@{/games/add-game}" th:object="${game}" method="post">
     <p>Name: <input type="text" th:field="*{name}" /><span th:if="${#fields.hasErrors('name')}" th:class="error" th:errors="*{name}"></span></p>
     <select th:field="*{genre}">
         <option th:each="genre : ${genres}" th:value="${genre.value}" th:text="${genre.value}">

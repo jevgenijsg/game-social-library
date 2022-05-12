@@ -1,4 +1,4 @@
-package com.tsicw.gamingsociallibrary.business.repository.domain;
+package com.tsicw.gamingsociallibrary.repository.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,10 +29,14 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "game_name")
     private String name;
 
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "game_genre")
     private Genre genre;
 }

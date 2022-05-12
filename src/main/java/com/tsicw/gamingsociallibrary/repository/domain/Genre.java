@@ -1,4 +1,4 @@
-package com.tsicw.gamingsociallibrary.business.repository.domain;
+package com.tsicw.gamingsociallibrary.repository.domain;
 
 public enum Genre {
     RPG("RPG"), STEALTH("STEALTH"), RTS("RTS"), FPS("FPS"), ARCADE("ARCADE");

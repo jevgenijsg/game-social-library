@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>GAME LIBRARY</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+
+    <div>
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+      </form>
+    </div>
+
+    <h3>Welcome to game library</h3>
+
+    <div>
+      <ul th:each="game :${games}">
+        <li th:text="${game.name}"></li> <span th:text="${game.genre}"></span>
+        <a th:href="@{/games/delete-game/{id}(id=${game.id})}">Delete</a>
+        <a th:href="@{/games/show-update-form/{id}(id=${game.id})}">Update</a>
+      </ul>
+    </div>
+
+    <a th:href="@{/games/show-add-form}">ADD GAME</a>
+
+
+  </body>
+</html>
