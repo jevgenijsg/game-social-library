@@ -28,14 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                     .authorizeRequests()
-                    .antMatchers("/", "/registration", "/resources/**").permitAll()
+                    .antMatchers("/", "/registration", "/resources/**", "/img/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginPage("/login").defaultSuccessUrl("/")
                     .permitAll()
                 .and()
-                    .logout()
+                    .logout().logoutUrl("/logout").logoutSuccessUrl("/")
                     .permitAll();
     }
 
@@ -50,4 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
+
+
 }

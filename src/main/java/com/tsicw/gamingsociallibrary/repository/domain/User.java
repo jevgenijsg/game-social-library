@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -19,16 +20,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Getter
 @Setter
 public class User implements UserDetails {
@@ -44,18 +46,22 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-/*    @Column(name = "email")
-    private String email;*/
-
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<GameCollection> collections;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "game_collection",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "games_id"))
+    private Set<Game> collection = new HashSet<>();
 
 
+    public void addGame(Game game){
+        collection.add(game);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS games cascade;
+CREATE TABLE games (
+id INT AUTO_INCREMENT  PRIMARY KEY,
+game_name VARCHAR(50) NOT NULL,
+game_genre VARCHAR(10) NOT NULL,
+filename VARCHAR(255) NOT NULL
+);
+

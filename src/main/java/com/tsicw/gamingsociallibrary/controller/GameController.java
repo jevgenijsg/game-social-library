@@ -4,6 +4,7 @@ import com.tsicw.gamingsociallibrary.repository.domain.Game;
 import com.tsicw.gamingsociallibrary.repository.domain.User;
 import com.tsicw.gamingsociallibrary.service.GameService;
 import com.tsicw.gamingsociallibrary.repository.domain.Genre;
+import com.tsicw.gamingsociallibrary.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,13 +19,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.UUID;
 
 @RequestMapping("/games")
 @Controller
 public class GameController {
+
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -38,26 +42,26 @@ public class GameController {
         return "add-game";
     }
 
-    @PostMapping(value = "/add-game")
-    public String addGame(
-            @AuthenticationPrincipal User user,
+    @PostMapping("/add-game")
+    public String addGame(@AuthenticationPrincipal User user,
             @Valid Game game, BindingResult bindingResult, Model model,
             @RequestParam("file") MultipartFile file) throws IOException {
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors() || gameService.gameAlreadyExists(game)){
             model.addAttribute("genres", genres);
+            model.addAttribute("message", "Game Already exists!");
             return "add-game";
     }
-        if(file != null){
+        if(file != null && !file.getOriginalFilename().isEmpty()){
             File uploadDirectory = new File(uploadPath);
-            if(uploadDirectory.exists()){
+            if(!uploadDirectory.exists()){
                 uploadDirectory.mkdir();
             }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultName = uuidFile + "." + file.getOriginalFilename();
-            game.setFilename(resultName);
-            file.transferTo(new File(uploadPath + "/"+ resultName));
+            String fileName = file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/"+ fileName));
+            game.setFilename(fileName);
         }
-      gameService.addGame(game);
+        game.addUser(user);
+        gameService.addGame(game);
         return "redirect:/";
     }
 

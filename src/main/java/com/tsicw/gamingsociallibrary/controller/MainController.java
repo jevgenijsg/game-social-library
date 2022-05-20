@@ -1,7 +1,11 @@
 package com.tsicw.gamingsociallibrary.controller;
 
-import com.tsicw.gamingsociallibrary.service.impl.GameServiceImpl;
+import com.tsicw.gamingsociallibrary.repository.domain.User;
+import com.tsicw.gamingsociallibrary.service.GameService;
+import com.tsicw.gamingsociallibrary.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +14,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @Autowired
-    GameServiceImpl gameService;
+    GameService gameService;
+
+    @Autowired
+    UserService userService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @GetMapping("/")
-    public String greeting(Model model) {
+    public String greeting(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("games", gameService.findAllGames());
+        model.addAttribute("user", user);
+/*        if(user!= null) {
+            User loggedUser = (User) userService.loadUserByUsername(user.getUsername());
+            model.addAttribute("username", loggedUser.getUsername());
+            model.addAttribute("user", loggedUser);
+        } else model.addAttribute("username", "Guest");*/
         return "main";
     }
 }

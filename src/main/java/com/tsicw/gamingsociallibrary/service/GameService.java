@@ -19,4 +19,6 @@ public interface GameService {
 
     Optional<Game> findGameById(Long id);
 
+    boolean gameAlreadyExists(Game game);
+
 }

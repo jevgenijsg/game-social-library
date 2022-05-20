@@ -4,9 +4,9 @@ import com.tsicw.gamingsociallibrary.repository.domain.Game;
 import com.tsicw.gamingsociallibrary.service.GameService;
 import com.tsicw.gamingsociallibrary.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +19,9 @@ public class GameServiceImpl implements GameService {
   public void addGame(Game game) {
     gameRepository.save(game);
   }
+
   @Override
   public List<Game> findAllGames() {
-
     return gameRepository.findAll();
   }
 
@@ -42,7 +42,8 @@ public class GameServiceImpl implements GameService {
     return gameRepository.findById(id);
   }
 
+  @Override
+  public boolean gameAlreadyExists(Game game) {
+    return gameRepository.exists(Example.of(game));
+  }
 }
-
-
-
