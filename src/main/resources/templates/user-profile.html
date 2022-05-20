@@ -16,6 +16,7 @@
 </form>
 
 <div><div th:text="${userprofile.username}"></div></div>
+<!--<button><a th:href="@{user/{id}/update-profile}(id=${userprofile.id})}">Update username</a></button>-->
 
 <h3>My games </h3>
 <div>
@@ -24,15 +25,9 @@
         <div th:if="${game.filename}">
             <img th:src="@{/img/{image}(image=${game.filename})}">
         </div>
-        <a th:href="@{/user/{userid}/delete-game/{gameid}(userid=${userprofile.id}, gameid=${game.id})}">Remove</a>
-        <!--<a th:href="@{/games/delete-game/{id}(id=${game.id})}">Delete</a>-->
+        <button><a th:href="@{/user/{userid}/delete-game/{gameid}(userid=${userprofile.id}, gameid=${game.id})}">Remove</a></button>
     </ul>
 </div>
-
-
 <a th:href="@{/}">Back to main</a>
-
-
-
 </body>
 </html>

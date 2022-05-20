@@ -23,7 +23,6 @@
         <div th:if="${game.filename}">
           <img th:src="@{/img/{image}(image=${game.filename})}">
         </div>
-        <!--<a th:href="@{/games/delete-game/{id}(id=${game.id})}">Delete</a>-->
         <a th:href="@{/games/show-update-form/{id}(id=${game.id})}">Add to collection</a>
       </ul>
     </div>

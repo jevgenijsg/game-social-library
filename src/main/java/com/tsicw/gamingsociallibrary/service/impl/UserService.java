@@ -15,17 +15,21 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private GameRepository gameRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;   }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            return userRepository.findByUsername(username);
+     /*   User user = userRepository.findByUsername(username);
+            if(user != null){
+                return user;
+            }
+            throw new UsernameNotFoundException("User with name: " + username + " not found");*/
+        return userRepository.findByUsername(username);
     }
 
     public Optional<User> findUserById(Long id){
@@ -36,7 +40,22 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    //method needs rework - ugly
     public void removeGame(Long userId, Long gameId){
-        userRepository.findById(userId).get().getCollection().remove(gameRepository.getById(gameId));
+        User user = userRepository.getById(userId);
+        Game gameToRemove = gameRepository.getById(gameId);
+        user.getCollection().remove(gameToRemove);
+        userRepository.save(user);
     }
+
+/*    public void updateUserData(User user){
+        User updatedUser = User.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .collection(user.getCollection())
+                .roles(user.getRoles())
+                .build();
+        userRepository.save(updatedUser);
+    }*/
 }

@@ -71,7 +71,6 @@ public class GameController {
             Game game = gameService.findGameById(id).get();
             model.addAttribute("game", game);
             model.addAttribute("genres", genres);
-            return "update-form";
         }
         return "redirect:/";
     }
@@ -83,9 +82,9 @@ public class GameController {
         return "redirect:/";
   }
 
-    @GetMapping("/delete-game/{id}")
+/*    @GetMapping("/delete-game/{id}")
     public String deleteGame(@PathVariable("id") Long id){
         gameService.deleteById(id);
         return "redirect:/";
-    }
+    }*/
 }

@@ -26,11 +26,6 @@ public class MainController {
     public String greeting(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("games", gameService.findAllGames());
         model.addAttribute("user", user);
-/*        if(user!= null) {
-            User loggedUser = (User) userService.loadUserByUsername(user.getUsername());
-            model.addAttribute("username", loggedUser.getUsername());
-            model.addAttribute("user", loggedUser);
-        } else model.addAttribute("username", "Guest");*/
         return "main";
     }
 }
