@@ -1,12 +1,9 @@
 package com.tsicw.gamingsociallibrary.controller;
 
-import com.tsicw.gamingsociallibrary.repository.domain.Game;
 import com.tsicw.gamingsociallibrary.repository.domain.User;
 import com.tsicw.gamingsociallibrary.service.GameService;
 import com.tsicw.gamingsociallibrary.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,25 +38,23 @@ public class UserController {
         return "redirect:/user/{id}";
     }
 
-   /* @GetMapping("/{id}/show-update-profile")
-    public String showUpdateProfile(@AuthenticationPrincipal User user, @PathVariable("id") Long id, Model model){
+    @GetMapping("/{id}/show-update-profile")
+    public String showUpdateProfile(@PathVariable("id") Long id, Model model){
         if(userService.findUserById(id).isPresent()) {
-            //User user = userService.findUserById(id).get();
+            User user = userService.findUserById(id).get();
             model.addAttribute("user", user);
-            return "user-profile";
+            return "update-profile";
         }
-        return "/user/{id}";
+        return "redirect:/user/{id}";
     }
 
     @PostMapping("/{id}/update-profile")
     public String updateProfile(@PathVariable("id") Long id,
                                 @Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "user-profile";
+            return "update-profile";
         }
         userService.updateUserData(user);
         return "redirect:/user/{id}";
-    }*/
-
-
+    }
 }

@@ -16,7 +16,7 @@
 </form>
 
 <div><div th:text="${userprofile.username}"></div></div>
-<!--<button><a th:href="@{user/{id}/update-profile}(id=${userprofile.id})}">Update username</a></button>-->
+<button><a th:href="@{/user/{id}/show-update-profile(id=${userprofile.id})}">Update username</a></button>
 
 <h3>My games </h3>
 <div>

@@ -24,11 +24,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-     /*   User user = userRepository.findByUsername(username);
-            if(user != null){
-                return user;
-            }
-            throw new UsernameNotFoundException("User with name: " + username + " not found");*/
         return userRepository.findByUsername(username);
     }
 
@@ -48,7 +43,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-/*    public void updateUserData(User user){
+    public void updateUserData(User user){
         User updatedUser = User.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -57,5 +52,5 @@ public class UserService implements UserDetailsService {
                 .roles(user.getRoles())
                 .build();
         userRepository.save(updatedUser);
-    }*/
+    }
 }

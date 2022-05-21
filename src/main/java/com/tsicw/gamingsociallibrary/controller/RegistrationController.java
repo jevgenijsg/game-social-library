@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -24,12 +25,14 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration(){
+    public String registration(Model model){
+
+        model.addAttribute("user", new User());
     return "registration";
 }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model){
+    public String addUser(@Valid User user, Model model){
         if(userService.loadUserByUsername(user.getUsername()) != null){
             model.addAttribute("message", "User already exists");
             return "registration";

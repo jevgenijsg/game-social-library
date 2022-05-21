@@ -1,2 +1,2 @@
-INSERT INTO games (id, game_name, game_genre, filename) VALUES (1, 'Escape from tarkov', 'FPS', '01df7dcb-6942-4db8-9fba-4fb9c58bb367.png');
-INSERT INTO games (id, game_name, game_genre, filename) VALUES (2, 'DIABLO 3', 'RPG', '70e902945f52904d0fdd033d7500877d.jpg');
+INSERT INTO games (id, game_name, game_genre, filename) VALUES (1, 'Escape from tarkov', 'FPS', 'Escape-From-Tarkov-Transparent-Background.png');
+INSERT INTO games (id, game_name, game_genre, filename) VALUES (2, 'DIABLO III', 'RPG', '140-1404364_diablo-3-logo-png.png');

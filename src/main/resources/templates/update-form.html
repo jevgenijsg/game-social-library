@@ -10,8 +10,8 @@
 
 <h1>FORM</h1>
 <form action="#" th:action="@{/games/update-game/{id}(id=${game.id})}" th:object="${game}" method="post">
-  <p>Name: <input type="text" th:field="*{name}" /><span th:if="${#fields.hasErrors('name')}" th:class="error" th:errors="*{name}"></span></p>
-  <select th:field="*{genre}">
+  <p>Name: <input type="text" th:field="*{game.name}" /><span th:if="${#fields.hasErrors('name')}" th:class="error" th:errors="*{game.name}"></span></p>
+  <select th:field="*{game.genre}">
     <option th:each="genre : ${genres}" th:value="${genre.value}" th:text="${genre.value}">
     </option>
   </select>

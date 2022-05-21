@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RequestMapping("/games")
@@ -82,9 +83,13 @@ public class GameController {
         return "redirect:/";
   }
 
-/*    @GetMapping("/delete-game/{id}")
-    public String deleteGame(@PathVariable("id") Long id){
-        gameService.deleteById(id);
+    @GetMapping("/add-to-collection/{id}")
+    public String addGameToCollection(@AuthenticationPrincipal User user, @PathVariable("id") Long id){
+        if(gameService.findGameById(id).isPresent()){
+            Game game = gameService.findGameById(id).get();
+            game.addUser(user);
+            gameService.updateGame(game);
+        }
         return "redirect:/";
-    }*/
+    }
 }
