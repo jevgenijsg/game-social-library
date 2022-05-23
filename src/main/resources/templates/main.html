@@ -19,11 +19,6 @@
                 </form>
             </div>
 
-
-
-<!--        <span sec:authorize="isAnonymous()"><a th:href="@{/login}">Sign in</a></span>
-        <span sec:authorize="isAnonymous()"><a th:href="@{/registration}" >Sign up</a></span>-->
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="/">GAME SOCIAL LIBRARY</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +29,11 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
                 <span th:if="${user == null}">Hello Guest</span>
-                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.username}"><span class="sr-only">(current)</span></a>
+                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.username}"></a>
+                  <script th:inline="javascript">
+                      var user = [[${user}]];
+
+                      console.log(user)</script>
               </li>
             </ul>
           </div>
@@ -43,7 +42,6 @@
         <form th:action="@{/games/show-add-form}" method="get">
           <button sec:authorize="isAuthenticated()" type="submit">ADD NEW GAME</button>
         </form>
-
 
         <div class="container mt-4">
             <div class="card-deck">
@@ -61,21 +59,5 @@
             </div>
             </div>
         </div>
-
-
-  <!--    <div>
-        <ul th:each="game :${games}">
-          <li th:text="${game.name}"></li> <span th:text="${game.genre}"></span>
-          <div th:if="${game.filename}">
-            <img th:src="@{/img/{image}(image=${game.filename})}">
-          </div>
-          <a th:href="@{/games/add-to-collection/{id}(id=${game.id})}">Add to collection</a>
-        </ul>
-      </div>-->
-
-<!--        <span th:if="${user == null}">Hello Guest</span>
-        <span sec:authorize="isAuthenticated()">Hello, <a th:href="@{/user/{id}(id=${user.id})}" th:text="${user.username}"></a></span>-->
-
-
     </body>
 </html>

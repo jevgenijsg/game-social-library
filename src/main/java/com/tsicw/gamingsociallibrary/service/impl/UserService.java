@@ -5,6 +5,7 @@ import com.tsicw.gamingsociallibrary.repository.UserRepository;
 import com.tsicw.gamingsociallibrary.repository.domain.Game;
 import com.tsicw.gamingsociallibrary.repository.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -4,6 +4,7 @@ import com.tsicw.gamingsociallibrary.repository.domain.User;
 import com.tsicw.gamingsociallibrary.service.GameService;
 import com.tsicw.gamingsociallibrary.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update-profile")
-    public String updateProfile(@PathVariable("id") Long id,
+    public String updateProfile(@AuthenticationPrincipal User loggedUser, @PathVariable("id") Long id,
                                 @Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "update-profile";
