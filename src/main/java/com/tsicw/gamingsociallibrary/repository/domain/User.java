@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
@@ -58,6 +59,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "games_id"))
     private Set<Game> collection = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<ExchangeOffer> offers;
+
 
     public void addGame(Game game){
         collection.add(game);
@@ -87,4 +91,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

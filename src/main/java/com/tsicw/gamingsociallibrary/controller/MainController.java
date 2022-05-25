@@ -24,9 +24,11 @@ public class MainController {
 
     @GetMapping("/")
     public String greeting(@AuthenticationPrincipal User user, Model model) {
-    // fetch
-      model.addAttribute("games", gameService.findAllGames());
-        model.addAttribute("user", user);
+        if(user != null) {
+            User actualUser = userService.findUserById(user.getId()).get();
+            model.addAttribute("user", actualUser);
+        }
+        model.addAttribute("games", gameService.findAllGames());
         return "main";
     }
 }

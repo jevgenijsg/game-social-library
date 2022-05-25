@@ -50,8 +50,8 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update-profile")
-    public String updateProfile(@AuthenticationPrincipal User loggedUser, @PathVariable("id") Long id,
-                                @Valid User user, BindingResult bindingResult){
+    public String updateProfile(@PathVariable("id") Long id, @Valid User user,
+                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "update-profile";
         }
