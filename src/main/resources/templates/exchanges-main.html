@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
 
-</body>
+        <form th:action="@{/trades/show-trade-form}" method="get">
+            <button sec:authorize="isAuthenticated()" type="submit">ADD NEW TRADE</button>
+        </form>
+
+    <div class="container mt-4">
+        <div class="card-deck">
+            <div th:each="trade :${trades}">
+                <div class="card">
+                    <p class="card-text"> I have : <h5 class="card-title" th:text="${trade.game.name}"></h5></p>
+                    <img class="card-img-top" th:src="@{/img/{image}(image=${trade.game.filename})}" width="150px" height="200px">
+                    <div class="card-body">
+                        <p class="card-text">Looking for : <h5 class="card-title" th:text="${trade.exchangeGame.name}"></h5></p>
+                        <img class="card-img-bottom" th:src="@{/img/{image}(image=${trade.exchangeGame.filename})}" width="150px" height="200px">
+                        <a th:href="@{/games/add-to-collection/{id}(id=${game.id})}" class="btn btn-primary">Trade!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a th:href="@{/}">Back</a></p>
+
+    </body>
 </html>

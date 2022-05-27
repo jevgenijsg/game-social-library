@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,13 @@ public class UserController {
         return "user-profile";
     }
 
+    @GetMapping("/{id}/offers")
+    public String showOffers(@PathVariable Long id, Model model){
+        Optional<User> loggedInUser = userService.findUserById(id);
+        loggedInUser.ifPresent(user -> model.addAttribute("useroffers", user.getOffers()));
+        return "user-profile-offers";
+    }
+
     @GetMapping("/{id}/delete-game/{gameId}")
     public String deleteGameFromCollection(@PathVariable("id") Long userId, @PathVariable("gameId") Long gameId){
         userService.removeGame(userId, gameId);
@@ -51,8 +59,11 @@ public class UserController {
 
     @PostMapping("/{id}/update-profile")
     public String updateProfile(@PathVariable("id") Long id, @Valid User user,
-                                 BindingResult bindingResult){
+                                 BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
+            return "update-profile";
+        } else if(userService.loadUserByUsername(user.getUsername()) != null) {
+            model.addAttribute("existedUsername", "Username is already in use");
             return "update-profile";
         }
         userService.updateUserData(user);

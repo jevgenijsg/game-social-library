@@ -18,6 +18,8 @@
 <div><div th:text="${userprofile.username}"></div></div>
 <button><a th:href="@{/user/{id}/show-update-profile(id=${userprofile.id})}">Update username</a></button>
 
+<button><a th:href="@{/user/{id}/offers(id=${userprofile.id})}">My Trades</a></button>
+
 <h3>My games </h3>
 <div>
     <ul th:each="game :${userprofile.collection}">
@@ -28,6 +30,19 @@
         <button><a th:href="@{/user/{userid}/delete-game/{gameid}(userid=${userprofile.id}, gameid=${game.id})}">Remove</a></button>
     </ul>
 </div>
+
+
+
+<!--<div>
+    <ul th:each="offer :${userprofile.offers}">
+        <li th:text="${offer.game.name}"></li> <span th:text="${offer.game.genre}"></span>
+        <li th:text="${offer.exchangeGame.name}"></li> <span th:text="${offer.exchangeGame.genre}"></span>
+        <li th:text="${offer.isActive} ? 'ACTIVE' : 'NOT ACTIVE'"></li>
+    </ul>
+</div>-->
+
+
+
 <a th:href="@{/}">Back to main</a>
 </body>
 </html>

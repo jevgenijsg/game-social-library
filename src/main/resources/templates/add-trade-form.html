@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Hello</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <p>ADD TRADE</p>
+
+<!--        <form action="#" th:action="@{/trades/add-trade}" th:object="${trade}" method="post">
+            <table>
+                <tr>
+                    <td>User game</td>
+                    <td>
+                        <th:block th:each="game : ${usergames}">
+                            <input type="checkbox" name="usrgame" th:value="${game.id}"/>
+                            <label th:text="${game.name}"></label>
+                        </th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Game</td>
+                    <td>
+                        <th:block th:each="allgame : ${games}">
+                            <input type="checkbox" name="dbgame" th:value="${allgame.id}"/>
+                            <label th:text="${allgame.name}"></label>
+                        </th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add"/></td>
+                </tr>
+            </table>
+        </form>-->
+
+        <form action="#" th:action="@{/trades/add-trade}" th:object="${trade}" method="post">
+
+            <div class="container mt-4">
+                <div class="card-deck">
+                    <div th:each="game :${usergames}">
+                        <div class="card" style="width: 18rem;">
+                            <div th:if="${game.filename}">
+                                <img th:src="@{/img/{image}(image=${game.filename})}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${game.name}"></h5>
+                                    <p class="card-text" th:text="${game.genre}"></p>
+                                    <input type="checkbox" name="usergamechoise" th:value="${game.id}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <p>SELECT GAME TO EXCHANGE</p>
+
+            <div class="container mt-4">
+                <div class="card-deck">
+                    <div th:each="game :${games}">
+                        <div class="card" style="width: 18rem;">
+                            <div th:if="${game.filename}">
+                                <img th:src="@{/img/{image}(image=${game.filename})}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${game.name}"></h5>
+                                    <p class="card-text" th:text="${game.genre}"></p>
+                                    <input type="checkbox" name="dbgame" th:value="${game.id}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            <select th:field="*{exchangeGame}">
+                <option th:each="allgame : ${usergames}" th:value="${allgame.getId()}" th:text="${allgame.name}">
+                </option>
+            </select>
+
+            <select th:field="*{exchangeGame}">
+                <option th:each="allgame : ${games}" th:value="${allgame.getId()}" th:text="${allgame.name}">
+                </option>
+            </select>-->
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /><a th:href="@{/}">Back</a></p>
+        </form>
+    </body>
+</html>

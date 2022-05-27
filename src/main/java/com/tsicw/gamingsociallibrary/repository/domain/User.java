@@ -62,9 +62,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<ExchangeOffer> offers;
 
-
     public void addGame(Game game){
         collection.add(game);
+    }
+
+    public void addExchangeOffer(ExchangeOffer exchangeOffer){
+        offers.add(exchangeOffer);
     }
 
     @Override

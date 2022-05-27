@@ -1,7 +1,13 @@
 package com.tsicw.gamingsociallibrary.service;
 
-import org.springframework.stereotype.Controller;
+import com.tsicw.gamingsociallibrary.repository.domain.ExchangeOffer;
 
-@Controller
+import java.util.List;
+
 public interface ExchangeOfferService {
+
+    public List<ExchangeOffer> getAllOffers();
+
+    void saveExchangeOffer(ExchangeOffer exchangeOffer);
+
 }

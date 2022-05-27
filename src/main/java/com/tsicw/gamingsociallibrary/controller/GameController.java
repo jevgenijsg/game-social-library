@@ -61,9 +61,7 @@ public class GameController {
             file.transferTo(new File(uploadPath + "/"+ fileName));
             game.setFilename(fileName);
         } else{
-
             game.setFilename("default-logo.png");
-
         }
         game.addUser(user);
         gameService.addGame(game);

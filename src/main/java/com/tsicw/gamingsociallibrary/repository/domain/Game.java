@@ -60,13 +60,11 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<ExchangeOffer> offers;
 
-
-
+    @OneToMany(mappedBy = "exchangeGame")
+    private Set<ExchangeOffer> counterOffer;
 
     public void addUser(User user){
         users.add(user);
     }
-
-
 
 }

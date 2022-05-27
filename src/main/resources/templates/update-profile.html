@@ -14,7 +14,10 @@
 
 <h1>FORM</h1>
 <form action="#" th:action="@{/user/{id}/update-profile(id=${user.id})}" th:object="${user}" method="post">
-    <p>Name: <input type="text" th:field="*{username}" /><span th:if="${#fields.hasErrors('username')}" th:class="error" th:errors="*{username}"></span></p>
+    <div th:if="${existedUsername != null}">
+        <p th:text="${existedUsername}"></p>
+    </div>
+    <p>Name: <input type="text" th:field="*{username}" /></p>
     <input type="hidden" th:field="*{password}" />
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>

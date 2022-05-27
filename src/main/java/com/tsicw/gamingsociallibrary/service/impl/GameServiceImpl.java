@@ -1,6 +1,7 @@
 package com.tsicw.gamingsociallibrary.service.impl;
 
 import com.tsicw.gamingsociallibrary.repository.domain.Game;
+import com.tsicw.gamingsociallibrary.repository.domain.User;
 import com.tsicw.gamingsociallibrary.service.GameService;
 import com.tsicw.gamingsociallibrary.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,12 @@ public class GameServiceImpl implements GameService {
   @Override
   public boolean gameAlreadyExists(Game game) {
     return gameRepository.exists(Example.of(game));
+  }
+
+  public List<Game> findAllExcludeUsers(User user){
+    List<Game> allgames = gameRepository.findAll();
+     allgames.removeAll(user.getCollection());
+
+     return allgames;
   }
 }
