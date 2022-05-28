@@ -37,8 +37,9 @@ public class ExchangeOfferController {
 
 
     @GetMapping("/")
-    public String showAllExchangeOffers(Model model) {
+    public String showAllExchangeOffers(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("trades", exchangeOfferService.getAllOffers());
+        model.addAttribute("user", user);
         return "exchanges-main";
     }
 
@@ -73,17 +74,21 @@ public class ExchangeOfferController {
         return "redirect:/trades/";
     }
 
-    @GetMapping
+    @GetMapping("/trade/{id}")
     public String acceptTrade(@AuthenticationPrincipal User user,
-                              @RequestParam("game") Long gameId,
-                              @RequestParam("exchangeGame") Long exchangeGameId,
-                              @RequestParam("trader") Long traidingUserId){
+                              @PathVariable("id") Long offerId) {
 
-
-
+        if(user.getCollection().contains(exchangeOfferService.findOfferById(offerId).get().getExchangeGame())){
+            User buyer = userService.findUserById(user.getId()).get();
+            exchangeOfferService.exchangeOffers(buyer, offerId);
+        }
+/*        userService.updateUserData(user);
+        userService.updateUserData(exchangeOfferService.findOfferById(offerId).get().getUser());*/
 
         return "redirect:/trades/";
     }
+
+
 
 
 }

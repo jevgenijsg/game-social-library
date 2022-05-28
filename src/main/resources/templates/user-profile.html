@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <title>PROFILE</title>
+    <title>User Profile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -10,39 +10,62 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-<form th:action="@{/logout}" method="post">
-    <button sec:authorize="isAuthenticated()" type="submit">Logout</button>
-</form>
+    <body>
 
-<div><div th:text="${userprofile.username}"></div></div>
-<button><a th:href="@{/user/{id}/show-update-profile(id=${userprofile.id})}">Update username</a></button>
+        <div class="container">
 
-<button><a th:href="@{/user/{id}/offers(id=${userprofile.id})}">My Trades</a></button>
+            <div class="text-right mb-2 mt-2 mr-2">
+                <form th:action="@{/logout}" method="post">
+                    <button sec:authorize="isAuthenticated()" class="btn btn-primary btn-sm active mr-auto" type="submit">Logout</button>
+                </form>
+            </div>
 
-<h3>My games </h3>
-<div>
-    <ul th:each="game :${userprofile.collection}">
-        <li th:text="${game.name}"></li> <span th:text="${game.genre}"></span>
-        <div th:if="${game.filename}">
-            <img th:src="@{/img/{image}(image=${game.filename})}">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/">GAME SOCIAL LIBRARY</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/trades/}">Exchange offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/user/{id}(id=${userprofile.id})}">My games</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/user/{id}/offers(id=${userprofile.id})}">My offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/user/{id}(id=${userprofile.id})}" th:text="${userprofile.username}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="text-right mt-3 ml-1 mr-1">
+                <a th:href="@{/user/{id}/show-update-profile(id=${userprofile.id})}" class="btn btn-primary mr-auto">Update username</a>
+            </div>
+            <div class="text-right mt-3 ml-1 mr-1">
+                <a sec:authorize="isAuthenticated()" th:href="@{/games/show-add-form}" class="btn btn-primary mr-auto">Add new game</a>
+            </div>
+            <h4 class="display-4">My Games</h4>
+
+            <div class="container mt-3 ml-3">
+                <div class="card-deck">
+                    <div th:each="game :${userprofile.collection}">
+                        <div class="card mt-3 mb-3">
+                            <img class="card-img-top" th:src="@{/img/{image}(image=${game.filename})}" height="200vh" width="100vw">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${game.name}"></h5>
+                                <p class="card-text" th:text="${game.genre}"></p>
+                                <a th:href="@{/user/{userid}/delete-game/{gameid}(userid=${userprofile.id}, gameid=${game.id})}" class="btn btn-primary">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button><a th:href="@{/user/{userid}/delete-game/{gameid}(userid=${userprofile.id}, gameid=${game.id})}">Remove</a></button>
-    </ul>
-</div>
-
-
-
-<!--<div>
-    <ul th:each="offer :${userprofile.offers}">
-        <li th:text="${offer.game.name}"></li> <span th:text="${offer.game.genre}"></span>
-        <li th:text="${offer.exchangeGame.name}"></li> <span th:text="${offer.exchangeGame.genre}"></span>
-        <li th:text="${offer.isActive} ? 'ACTIVE' : 'NOT ACTIVE'"></li>
-    </ul>
-</div>-->
-
-
-
-<a th:href="@{/}">Back to main</a>
-</body>
+    </body>
 </html>

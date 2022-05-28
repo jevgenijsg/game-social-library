@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
-    <title>GAME LIBRARY</title>
+    <title>Main</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -11,6 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
   </head>
     <body>
+
+    <div class="container">
+
             <div class="text-right mb-2 mt-2 mr-2">
                 <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-primary btn-sm active " role="button" aria-pressed="true">Sing In</a>
                 <a th:href="@{/registration}" sec:authorize="isAnonymous()" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Sing Up</a>
@@ -31,32 +34,37 @@
                     <a class="nav-link" th:href="@{/trades/}">Exchange offers</a>
                 </li>
                 <li class="nav-item">
-                   <span th:if="${user == null}">Hello Guest</span>
+<!--                   <span th:if="${user == null}">Hello Guest</span>-->
                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.username}"></a>
                 </li>
             </ul>
           </div>
         </nav>
 
-        <form th:action="@{/games/show-add-form}" method="get">
-          <button sec:authorize="isAuthenticated()" type="submit">ADD NEW GAME</button>
-        </form>
+<!--            <div class="container mt-3 ml-1 mr-1">
+                <form th:action="@{/games/show-add-form}" method="get">
+                    <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-primary btn-block">ADD NEW GAME</button>
+                </form>
+            </div>-->
 
-        <div class="container mt-4">
-            <div class="card-deck">
-              <div th:each="game :${games}">
-                <div class="card" style="width: 18rem;">
-                  <div th:if="${game.filename}">
-                    <img th:src="@{/img/{image}(image=${game.filename})}" class="card-img-top">
-                    <div class="card-body">
-                    <h5 class="card-title" th:text="${game.name}"></h5>
-                    <p class="card-text" th:text="${game.genre}"></p>
-                    <a th:href="@{/games/add-to-collection/{id}(id=${game.id})}" class="btn btn-primary">Add to collection</a>
-                  </div>
+        <div class="text-right mt-3 ml-1 mr-1">
+            <a sec:authorize="isAuthenticated()" th:href="@{/games/show-add-form}" class="btn btn-primary mr-auto">ADD NEW GAME</a>
+        </div>
+
+            <div class="container mt-3 ml-3">
+                <div class="card-deck">
+                    <div th:each="game :${games}">
+                        <div class="card mt-3 mb-3">
+                            <img class="card-img-top" th:src="@{/img/{image}(image=${game.filename})}" height="200vh" width="100vw">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${game.name}"></h5>
+                                    <p class="card-text" th:text="${game.genre}"></p>
+                                    <a th:href="@{/games/add-to-collection/{id}(id=${game.id})}" class="btn btn-primary">Add to collection</a>
+                                </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-           </div>
         </div>
     </body>
 </html>

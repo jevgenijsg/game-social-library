@@ -13,27 +13,62 @@
     </head>
     <body>
 
-        <form th:action="@{/trades/show-trade-form}" method="get">
-            <button sec:authorize="isAuthenticated()" type="submit">ADD NEW TRADE</button>
-        </form>
+    <div class="container">
 
-    <div class="container mt-4">
-        <div class="card-deck">
-            <div th:each="trade :${trades}">
-                <div class="card">
-                    <p class="card-text"> I have : <h5 class="card-title" th:text="${trade.game.name}"></h5></p>
-                    <img class="card-img-top" th:src="@{/img/{image}(image=${trade.game.filename})}" width="150px" height="200px">
-                    <div class="card-body">
-                        <p class="card-text">Looking for : <h5 class="card-title" th:text="${trade.exchangeGame.name}"></h5></p>
-                        <img class="card-img-bottom" th:src="@{/img/{image}(image=${trade.exchangeGame.filename})}" width="150px" height="200px">
-                        <a th:href="@{/games/add-to-collection/{id}(id=${game.id})}" class="btn btn-primary">Trade!</a>
+        <div class="text-right mb-2 mt-2 mr-2">
+            <form th:action="@{/logout}" method="post">
+                <button sec:authorize="isAuthenticated()" class="btn btn-primary btn-sm active mr-auto" type="submit">Logout</button>
+            </form>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">GAME SOCIAL LIBRARY</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/trades/}">Exchange offers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/{id}(id=${user.id})}">My games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/{id}/offers(id=${user.id})}">My offers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.username}"></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="text-right mt-3 ml-1 mr-1">
+            <a sec:authorize="isAuthenticated()" th:href="@{/trades/show-trade-form}" class="btn btn-primary mr-auto">ADD NEW EXCHANGE OFFER</a>
+        </div>
+
+<!--        <form th:action="@{/trades/show-trade-form}" method="get">
+            <button sec:authorize="isAuthenticated()" type="submit">ADD NEW TRADE</button>
+        </form>-->
+
+        <div class="container mt-3 ml-3">
+            <div class="card-deck">
+                <div th:each="trade :${trades}">
+                    <div class="card mt-3 mb-3">
+                        <p class="card-text"> I have : <h5 class="card-title" th:text="${trade.game.name}"></h5></p>
+                        <img class="card-img-top" th:src="@{/img/{image}(image=${trade.game.filename})}" width="150px" height="200px">
+                        <div class="card-body">
+                            <p class="card-text">Looking for : <h5 class="card-title" th:text="${trade.exchangeGame.name}"></h5></p>
+                            <img class="card-img-bottom" th:src="@{/img/{image}(image=${trade.exchangeGame.filename})}" width="150px" height="200px">
+                            <a th:href="@{/trades/trade/{id}(id=${trade.id})}" class="btn btn-primary">Trade!</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <a th:href="@{/}">Back</a></p>
 
     </body>
 </html>

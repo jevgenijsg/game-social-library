@@ -38,6 +38,7 @@ public class UserController {
     public String showOffers(@PathVariable Long id, Model model){
         Optional<User> loggedInUser = userService.findUserById(id);
         loggedInUser.ifPresent(user -> model.addAttribute("useroffers", user.getOffers()));
+        model.addAttribute("user", loggedInUser.get());
         return "user-profile-offers";
     }
 
